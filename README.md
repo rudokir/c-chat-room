@@ -135,6 +135,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Your Name - [@rudokir](https://linkedin.com/in/rudokir)
+Linkedin Profile - [@rudokir](https://linkedin.com/in/rudokir)
 
 Project Link: [https://github.com/rudokir/c-chat-room](https://github.com/rudokir/c-chat-room)
