@@ -1,11 +1,34 @@
-# Simple C Chat Room Application
+# Chat Room Application using C
 
-A simple yet robust command-line chat application written in C that supports multiple concurrent users, timestamps, and username identification.
+A robust command-line chat application written in C that supports multiple concurrent users, chat rooms, private messaging, and more.
+
+## Version History
+
+### v1.1.0 (Current)
+- Added chat rooms functionality with lobby system
+- Implemented room management (create, join, leave)
+- Added automatic room cleanup when empty
+- Enhanced private messaging system
+- Added better buffer management and security
+- Fixed various memory leaks and bugs
+
+### v1.0.0
+- Initial release
+- Basic chat functionality
+- Multiple client support
+- Username identification
+- Basic command system
 
 ## Features
 
 - 🚀 Multi-client support (up to 10 simultaneous connections)
-- 👤 Username identification
+- 👤 Username identification and nickname changes
+- 🏠 Multiple chat rooms with management
+  - Default lobby system
+  - Create custom rooms
+  - Join/leave functionality
+  - Automatic room cleanup
+- 💬 Private messaging system
 - 🕒 Message timestamps
 - 📢 Join/Leave notifications
 - 🔄 Automatic connection management
@@ -25,8 +48,8 @@ To compile and run this chat application, you need:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/rudokir/c-chat-room.git
-cd c-chat-room
+git clone https://github.com/yourusername/c-chat-app.git
+cd c-chat-app
 ```
 
 2. Build the application using the provided build script:
@@ -59,23 +82,52 @@ The server will start listening on port 9340.
 
 2. Enter your username when prompted.
 
-3. Start chatting!
+3. You will automatically join the lobby.
 
-You can open multiple terminal windows to simulate different users connecting to the chat.
+### Available Commands
+
+- `/help` - Show available commands
+- `/list` - List all connected users
+- `/whois <username>` - Show information about a user
+- `/nick <new_name>` - Change your nickname
+- `/msg <user> <message>` - Send private message
+- `/rooms` - List available chat rooms
+- `/create <room>` - Create a new chat room
+- `/join <room>` - Join a chat room
+- `/leave` - Leave current room
+
+## Chat Rooms System
+
+### Default Lobby
+- All users automatically join the lobby upon connection
+- The lobby cannot be deleted
+- Users can chat in the lobby like any other room
+
+### Custom Rooms
+- Created using `/create <room_name>`
+- Automatically deleted when empty
+- Maximum of 5 rooms at once (including lobby)
+- Room creator automatically joins their created room
 
 ## Message Format
 
-Messages in the chat appear in the following formats:
+Messages appear in the following formats:
 
-- Regular messages:
+- Regular room messages:
 ```
-[2024-03-12 14:30:45] John: Hello everyone!
+[2024-03-12 14:30:45] [Room] John: Hello everyone!
 ```
 
 - System messages:
 ```
 [2024-03-12 14:30:45] SYSTEM: John has joined the chat
-[2024-03-12 14:31:20] SYSTEM: Alice has left the chat
+[2024-03-12 14:31:20] SYSTEM: Room Gaming has been closed (no active users)
+```
+
+- Private messages:
+```
+[2024-03-12 14:30:45] [PM from Alice]: Hey there!
+[2024-03-12 14:30:45] [PM to Bob]: How are you?
 ```
 
 ## Technical Details
@@ -85,33 +137,22 @@ The application uses:
 - Poll for handling multiple clients
 - POSIX-compliant C code
 - System V networking primitives
+- Dynamic memory management for rooms
+- Secure buffer handling
 
-### Server Features
-- Handles up to 10 concurrent connections
-- Manages client disconnections gracefully
-- Broadcasts messages to all connected clients
-- Maintains client information including usernames
-
-### Client Features
-- Username selection at startup
-- Real-time message reception
-- Clean disconnection handling
-- Error reporting
-
-## Error Handling
-
-The application handles various error conditions:
-- Server full (too many clients)
-- Connection failures
-- Unexpected disconnections
-- Buffer overflows
-- Socket errors
+### Security Features
+- Protected against buffer overflows
+- Secure string handling
+- Memory leak prevention
+- Proper error handling
+- Input validation
 
 ## Limitations
 
 - Maximum of 10 concurrent users
+- Maximum of 5 chat rooms (including lobby)
 - Username length limited to 31 characters
-- Message length limited to 255 characters
+- Message length limited to 511 characters
 - Local network usage only (can be modified for internet use)
 - No message persistence (messages are not saved)
 
